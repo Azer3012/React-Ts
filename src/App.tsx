@@ -17,6 +17,7 @@ import { UserContextProvider } from './context/UserContext';
 import User from './context/User';
 import Private from './components/auth/Private';
 import Profile from './components/auth/Profile';
+import List from './components/generics/List';
 
 
 function App() {
@@ -24,7 +25,9 @@ function App() {
 
   return (
     <div className="App">
-      <Private isLoggedIn={true} Component={Profile} />
+      <List items={['A','B','C']} onClick={(item)=>console.log(item)}/>
+      <List items={[1,2,3]} onClick={(item)=>console.log(item)}/>
+      <List items={[{id:1},{id:2}]} onClick={(item)=>console.log(item)}/>
     </div>
   );
 }
