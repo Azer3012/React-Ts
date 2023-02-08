@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Greet from './components/Greet';
@@ -18,16 +18,34 @@ import User from './context/User';
 import Private from './components/auth/Private';
 import Profile from './components/auth/Profile';
 import List from './components/generics/List';
+import Product from './components/Vlad/Product';
+import axios from 'axios';
+import { IProduct } from './components/Vlad/model';
+
 
 
 function App() {
+const [products,setProducts]=useState<IProduct[]>([])
 
 
+const getProducts=async()=>{
+  try {
+    const response=await axios.get<IProduct[]>('https://fakestoreapi.com/products?limit=3')
+    setProducts(response.data)
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+useEffect(()=>{
+  getProducts()
+},[])
   return (
     <div className="App">
-      <List items={['A','B','C']} onClick={(item)=>console.log(item)}/>
-      <List items={[1,2,3]} onClick={(item)=>console.log(item)}/>
-      <List items={[{id:1},{id:2}]} onClick={(item)=>console.log(item)}/>
+      {
+        products.map(product=>(<Product product={product}/>))
+      }
     </div>
   );
 }
